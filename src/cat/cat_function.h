@@ -1,7 +1,10 @@
 #ifndef CAT_FUNCTION_H
 #define CAT_FUNCTION_H
 
-#define _POSIX_C_SOURCE 200809L
+#define POSIX_C_SOURCE 200809L
+
+#define SUCCESS 0
+#define FAILURE 1
 
 #include <getopt.h>
 #include <stdbool.h>

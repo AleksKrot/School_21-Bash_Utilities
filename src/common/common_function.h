@@ -1,7 +1,7 @@
 #ifndef COMMON_FUNCTION_H
 #define COMMON_FUNCTION_H
 
-#define _POSIX_C_SOURCE 200809L
+#define POSIX_C_SOURCE 200809L
 
 #include <stdbool.h>
 #include <stdio.h>
