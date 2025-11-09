@@ -69,7 +69,7 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
 
 bool print_file(const char *path_file, Flags *flags) {
   bool error = false;
-  FILE *file = read_file(path_file, flags, &error);
+  FILE *file = open_file(path_file, flags, &error);
   if (!error) {
     int c;  // Для хранения текущего символа
     int last_c = flags->cat.last_c_file;  // Для предыдущего символа

@@ -59,7 +59,7 @@ void collect_files(int argc, char *argv[], char *path_file[],
   }
 }
 
-FILE *read_file(const char *path_file, const Flags *flags, bool *error) {
+FILE *open_file(const char *path_file, const Flags *flags, bool *error) {
   FILE *file = NULL;
   file = fopen(path_file, "r");
   if (file == NULL) {

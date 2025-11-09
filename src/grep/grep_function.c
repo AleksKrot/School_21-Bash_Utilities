@@ -48,7 +48,7 @@ bool add_pattern(Flags *flags, const char *pattern) {
 bool pattern_for_file(const char *path_file, Flags *flags) {
   bool error = false;
   char *line = NULL;
-  FILE *file = read_file(path_file, flags, &error);
+  FILE *file = open_file(path_file, flags, &error);
   if (!error) {
     size_t len = 0;
     ssize_t read;
@@ -190,7 +190,7 @@ bool handle_single_pattern(const char *line, const char *path_file,
 bool print_file(const char *path_file, Flags *flags) {
   bool error = false;
   char *line = NULL;
-  FILE *file = read_file(path_file, flags, &error);
+  FILE *file = open_file(path_file, flags, &error);
   if (!error) {
     size_t len = 0;
     ssize_t read;
