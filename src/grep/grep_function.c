@@ -17,7 +17,7 @@ void init_flags(Flags *flags) {
   flags->grep.f = NULL;
   flags->grep.o = false;
   flags->error = false;
-  flags->grep.multifiles = false;
+  flags->grep.multi_files = false;
   flags->program_name = "grep";
 }
 
@@ -137,14 +137,14 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
   handle_empty_patterns(argc, argv, flags, &optind);
   collect_files(argc, argv, path_file, count_files);
   if (*count_files > 1) {
-    flags->grep.multifiles = true;
+    flags->grep.multi_files = true;
   }
   return error;
 }
 
 void print_file_info(const char *path_file, const Flags *flags,
                      int line_number) {
-  if (flags->grep.multifiles && !flags->grep.h) {
+  if (flags->grep.multi_files && !flags->grep.h) {
     printf("%s:", path_file);
   }
   if (flags->grep.n && !flags->grep.c) {
