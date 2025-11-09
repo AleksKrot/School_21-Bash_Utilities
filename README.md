@@ -39,10 +39,10 @@
 git clone https://github.com/AleksKrot/School_21-Bash_Utilities.git
 
 # Переходим в каталог проекта
-cd simple_bash_utils
+cd Bash_Utilities/src
 
 # Строим проект
-make clean && make all
+make all
 
 Теперь у вас есть готовые исполняемые файлы утилит:
 
