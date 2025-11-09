@@ -36,7 +36,7 @@
 
 Процесс установки и настройки:
 # Клонируем репозиторий
-git clone https://github.com/your_username/simple_bash_utils.git
+git clone https://github.com/AleksKrot/School_21-Bash_Utilities.git
 
 # Переходим в каталог проекта
 cd simple_bash_utils
