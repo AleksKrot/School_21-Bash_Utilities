@@ -1,6 +1,33 @@
 #include "common_function.h"
 
-#include "../cat/cat_function.h"
+void init_flags(Flags *flags) {
+#ifdef CAT_FUNCTION_H
+  flags->b = false;
+  flags->e = false;
+  flags->E = false;
+  flags->t = false;
+  flags->T = false;
+  flags->num = 1;
+  flags->last_c_file = EOF;
+  flags->program_name = "cat";
+#endif
+#ifdef GREP_FUNCTION_H
+  flags->pattern = NULL;
+  flags->count_pattern = 0;
+  flags->i = false;
+  flags->c = false;
+  flags->l = false;
+  flags->h = false;
+  flags->f = NULL;
+  flags->o = false;
+  flags->multi_files = false;
+  flags->program_name = "grep";
+#endif
+  flags->n = false;
+  flags->s = false;
+  flags->v = false;
+  flags->error = false;
+}
 
 bool process_files(int argc, char *argv[], Flags *flags) {
   bool error = false;

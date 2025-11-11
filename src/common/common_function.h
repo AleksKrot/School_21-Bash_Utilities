@@ -5,9 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 
-typedef struct {
-#ifdef CAT
+#ifdef CAT_FUNCTION_H
+#include "../cat/cat_function.h"
+#endif
+
+#ifdef GREP_FUNCTION_H
+#include "../grep/grep_function.h"
+#endif
+
+typedef struct Flags {
+#ifdef CAT_FUNCTION_H
   bool b;
   bool e;
   bool E;
@@ -16,7 +25,7 @@ typedef struct {
   int num;
   int last_c_file;
 #endif
-#ifdef GREP
+#ifdef GREP_FUNCTION_H
   char **pattern;
   int count_pattern;
   bool i;

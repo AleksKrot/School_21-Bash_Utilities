@@ -2,25 +2,6 @@
 
 #include <stdlib.h>
 
-#include "../common/common_function.h"
-
-void init_flags(Flags *flags) {
-  flags->pattern = NULL;
-  flags->count_pattern = 0;
-  flags->i = false;
-  flags->v = false;
-  flags->c = false;
-  flags->l = false;
-  flags->n = false;
-  flags->h = false;
-  flags->s = false;
-  flags->f = NULL;
-  flags->o = false;
-  flags->error = false;
-  flags->multi_files = false;
-  flags->program_name = "grep";
-}
-
 bool add_pattern(Flags *flags, const char *pattern) {
   bool error = false;
   char **temp = realloc(flags->pattern,

@@ -1,21 +1,5 @@
 #include "cat_function.h"
 
-void init_flags(Flags *flags) {
-  flags->b = false;
-  flags->e = false;
-  flags->E = false;
-  flags->n = false;
-  flags->s = false;
-  flags->t = false;
-  flags->T = false;
-  flags->v = false;
-  flags->num = 1;
-  flags->last_c_file = EOF;
-  flags->error = false;
-  //flags->grep.s = false;
-  flags->program_name = "cat";
-}
-
 bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
                      int *count_files) {
   int opt;
