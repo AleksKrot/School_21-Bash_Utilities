@@ -1,10 +1,5 @@
 #include "cat_function.h"
 
-#include <stdlib.h>
-#include <string.h>
-
-#include "../common/common_function.h"
-
 void init_flags(Flags *flags) {
   flags->b = false;
   flags->e = false;

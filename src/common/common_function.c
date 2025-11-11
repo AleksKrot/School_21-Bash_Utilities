@@ -1,10 +1,4 @@
-#define _POSIX_C_SOURCE 200809L
-
 #include "common_function.h"
-
-#include <getopt.h>
-#include <stdio.h>
-#include <string.h>
 
 #include "../cat/cat_function.h"
 

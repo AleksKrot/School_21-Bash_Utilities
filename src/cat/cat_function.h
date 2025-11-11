@@ -4,8 +4,6 @@
 #define CAT
 
 #include <getopt.h>
-#include <stdbool.h>
-#include <stdio.h>
 
 #include "../common/common_function.h"
 

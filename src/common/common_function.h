@@ -1,10 +1,10 @@
 #ifndef COMMON_FUNCTION_H
 #define COMMON_FUNCTION_H
 
-#define POSIX_C_SOURCE 200809L
-
-#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 typedef struct {
 #ifdef CAT

@@ -1,18 +1,6 @@
-#define _POSIX_C_SOURCE 200809L
-
 #include "cat_test.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "cat_function.h"
-
-#define COMMAND "cat"
-#define COMMAND_S21 "./s21_cat"
-#define TEST_FILE1 "Test1.txt"
-#define TEST_FILE2 "Test2.txt"
-#define NON_EXISTENT_FILE "NonexistentTest.txt"
+#include "../cat/cat_function.h"
 
 void create_test_files() {
   FILE *f1 = fopen(TEST_FILE1, "w");

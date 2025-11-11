@@ -2,6 +2,15 @@
 #define CAT_TEST_H
 
 #include <stdio.h>
+#include <string.h>
+
+#include "../common/common_function.h"
+
+#define COMMAND "cat"
+#define COMMAND_S21 "./s21_cat"
+#define TEST_FILE1 "Test1.txt"
+#define TEST_FILE2 "Test2.txt"
+#define NON_EXISTENT_FILE "NonexistentTest.txt"
 
 typedef struct {
   const char *description;
