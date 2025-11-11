@@ -1,16 +1,16 @@
 #ifndef CAT_FUNCTION_H
 #define CAT_FUNCTION_H
 
-#define POSIX_C_SOURCE 200809L
-
-#define SUCCESS 0
-#define FAILURE 1
+#define CAT
 
 #include <getopt.h>
 #include <stdbool.h>
 #include <stdio.h>
 
 #include "../common/common_function.h"
+
+#define SUCCESS 0
+#define FAILURE 1
 
 /**
  * Инициализация флагов

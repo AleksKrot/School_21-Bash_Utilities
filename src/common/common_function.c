@@ -63,7 +63,7 @@ FILE *open_file(const char *path_file, const Flags *flags, bool *error) {
   FILE *file = NULL;
   file = fopen(path_file, "r");
   if (file == NULL) {
-    if (flags->grep.s == false) {
+    if (flags->s == false) {
       printf("%s: %s: No such file or directory\n", flags->program_name,
              path_file);
     }

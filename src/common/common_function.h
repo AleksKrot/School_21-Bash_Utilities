@@ -7,36 +7,29 @@
 #include <stdio.h>
 
 typedef struct {
+#ifdef CAT
   bool b;
   bool e;
   bool E;
-  bool n;
-  bool s;
   bool t;
   bool T;
-  bool v;
   int num;
   int last_c_file;
-} CatFlags;
-
-typedef struct {
+#endif
+#ifdef GREP
   char **pattern;
   int count_pattern;
   bool i;
-  bool v;
   bool c;
   bool l;
-  bool n;
   bool h;
-  bool s;
   char *f;
   bool o;
   bool multi_files;
-} GrepFlags;
-
-typedef struct {
-  CatFlags cat;
-  GrepFlags grep;
+#endif
+  bool n;
+  bool s;
+  bool v;
   bool error;
   const char *program_name;
 } Flags;

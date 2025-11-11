@@ -1,7 +1,7 @@
 #ifndef GREP_FUNCTION_H
 #define GREP_FUNCTION_H
 
-#define POSIX_C_SOURCE 200809L
+#define GREP
 
 #include <regex.h>
 #include <stdbool.h>

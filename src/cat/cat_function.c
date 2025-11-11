@@ -6,18 +6,18 @@
 #include "../common/common_function.h"
 
 void init_flags(Flags *flags) {
-  flags->cat.b = false;
-  flags->cat.e = false;
-  flags->cat.E = false;
-  flags->cat.n = false;
-  flags->cat.s = false;
-  flags->cat.t = false;
-  flags->cat.T = false;
-  flags->cat.v = false;
-  flags->cat.num = 1;
-  flags->cat.last_c_file = EOF;
+  flags->b = false;
+  flags->e = false;
+  flags->E = false;
+  flags->n = false;
+  flags->s = false;
+  flags->t = false;
+  flags->T = false;
+  flags->v = false;
+  flags->num = 1;
+  flags->last_c_file = EOF;
   flags->error = false;
-  flags->grep.s = false;
+  //flags->grep.s = false;
   flags->program_name = "cat";
 }
 
@@ -33,28 +33,28 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
   while ((opt = getopt_long(argc, argv, "beEnstT", long_opt, NULL)) != -1) {
     switch (opt) {
       case 'b':
-        flags->cat.b = true;
+        flags->b = true;
         break;
       case 'e':
-        flags->cat.e = flags->cat.v = true;
+        flags->e = flags->v = true;
         break;
       case 'E':
-        flags->cat.E = true;
+        flags->E = true;
         break;
       case 'n':
-        flags->cat.n = true;
+        flags->n = true;
         break;
       case 's':
-        flags->cat.s = true;
+        flags->s = true;
         break;
       case 't':
-        flags->cat.t = flags->cat.v = true;
+        flags->t = flags->v = true;
         break;
       case 'T':
-        flags->cat.T = true;
+        flags->T = true;
         break;
       case 'v':
-        flags->cat.v = true;
+        flags->v = true;
         break;
       default:
         flags->error = true;
@@ -72,11 +72,11 @@ bool print_file(const char *path_file, Flags *flags) {
   FILE *file = open_file(path_file, flags, &error);
   if (!error) {
     int c;  // Для хранения текущего символа
-    int last_c = flags->cat.last_c_file;  // Для предыдущего символа
-    int count_line_break = 0;  // Для подсчета количества переносов строк
+    int last_c = flags->last_c_file;  // Для предыдущего символа
+    int count_line_break = 0;  // Для подсчёта количества переносов строк
     while ((c = getc(file)) != EOF) {
       int should_print = 1;
-      if (flags->cat.s) {
+      if (flags->s) {
         if (c == '\n' && last_c == '\n') {
           count_line_break++;
         } else {
@@ -86,20 +86,20 @@ bool print_file(const char *path_file, Flags *flags) {
           should_print = 0;
         }
       }
-      if (should_print && (flags->cat.n || flags->cat.b) &&
+      if (should_print && (flags->n || flags->b) &&
           (last_c == EOF || last_c == '\n')) {
-        if ((flags->cat.b && c != '\n') || (flags->cat.n && !flags->cat.b)) {
-          printf("%6d\t", flags->cat.num++);
+        if ((flags->b && c != '\n') || (flags->n && !flags->b)) {
+          printf("%6d\t", flags->num++);
         }
       }
-      if (should_print && (flags->cat.E || flags->cat.e) && c == '\n') {
+      if (should_print && (flags->E || flags->e) && c == '\n') {
         putchar('$');
       }
-      if (should_print && (flags->cat.T || flags->cat.t) && c == '\t') {
+      if (should_print && (flags->T || flags->t) && c == '\t') {
         printf("^I");
         should_print = 0;
       }
-      if (should_print && flags->cat.v) {
+      if (should_print && flags->v) {
         show_nonprinting(c);
         should_print = 0;
       }
@@ -108,7 +108,7 @@ bool print_file(const char *path_file, Flags *flags) {
       }
       last_c = c;
     }
-    flags->cat.last_c_file = last_c;
+    flags->last_c_file = last_c;
     fclose(file);
   }
   return error;
