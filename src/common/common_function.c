@@ -29,31 +29,14 @@ void init_flags(Flags *flags) {
   flags->error = false;
 }
 
-bool process_files(int argc, char *argv[], Flags *flags) {
-  bool error = false;
-  init_flags(flags);
-  if (argc < 2) {
-    if (strcmp(flags->program_name, "cat") == 0) {
-      printf("%s: No files specified\n", flags->program_name);
-    } else if (strcmp(flags->program_name, "grep") == 0) {
-      printf("Usage: %s [OPTION]... PATTERNS [FILE]...\n", flags->program_name);
-      printf("Try '%s --help' for more information.\n", flags->program_name);
-    }
-    error = 1;
-  } else {
-    char *path_file[argc];
-    int count_files = 0;
-    if (parse_arguments(argc, argv, flags, path_file, &count_files) == 0) {
-      for (int i = 0; i < count_files; i++) {
-        if (print_file(path_file[i], flags) != 0) {
-          error = true;
-        }
-      }
-    } else {
-      error = true;
-    }
-  }
-  return error;
+void print_error() {
+#ifdef CAT_FUNCTION_H
+  printf("cat: No files specified\n");
+#endif
+#ifdef GREP_FUNCTION_H
+  printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
+  printf("Try 'grep --help' for more information\n");
+#endif
 }
 
 void handle_flag_error(const Flags *flags, int *count, char invalid_opt,
