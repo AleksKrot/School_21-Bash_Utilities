@@ -167,10 +167,10 @@ bool handle_single_pattern(const char *line, const char *path_file,
   return *line_has_match;
 }
 
-bool print_file(const char *path_file, Flags *flags) {
+bool print_file(const char *argv, Flags *flags) {
   bool error = false;
   char *line = NULL;
-  FILE *file = open_file(path_file, flags, &error);
+  FILE *file = open_file(argv, flags, &error);
   if (!error) {
     size_t len = 0;
     ssize_t read;
@@ -191,26 +191,26 @@ bool print_file(const char *path_file, Flags *flags) {
         const char *pattern = flags->pattern[i];
         if (pattern != NULL) {
           line_has_match = handle_single_pattern(
-              line, path_file, flags, line_number, pattern, &line_has_match,
+              line, argv, flags, line_number, pattern, &line_has_match,
               &line_already_printed);
         }
       }
       if (flags->v && !line_has_match) {
         match_count++;
         if (!flags->c && !flags->l && !line_already_printed) {
-          print_file_info(path_file, flags, line_number);
+          print_file_info(argv, flags, line_number);
           printf("%s\n", line);
         }
       } else if (!flags->v && line_has_match) {
         match_count++;
       }
       if (flags->l && match_count > 0 && !file_already_printed) {
-        printf("%s\n", path_file);
+        printf("%s\n", argv);
         file_already_printed = true;
       }
     }
     if (flags->c && !file_already_printed) {
-      print_file_info(path_file, flags, line_number);
+      print_file_info(argv, flags, line_number);
       printf("%d\n", match_count);
     }
     fclose(file);

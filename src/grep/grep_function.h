@@ -82,12 +82,12 @@ void print_file_info(const char *path_file, const Flags *flags,
 
 /**
  * Чтение и вывод на экран результата
- * @param path_file - путь к файлу
+ * @param argv - массив аргументов командной строки
  * @param flags - флаги
  * @return SUCCESS - выполнено успешно
  * @return FAILURE - произошла ошибка
  */
-bool print_file(const char *path_file, Flags *flags);
+bool print_file(const char *argv, Flags *flags);
 
 /**
  * Очистка флагов

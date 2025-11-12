@@ -28,12 +28,12 @@ bool parse_arguments(int argc, char *argv[], Flags *flags);
 
 /**
  * Чтение и вывода результата
- * @param path_file - путь к файлу
+ * @param argv - массив аргументов командной строки
  * @param flags - флаги
  * @return EXIT_SUCCESS - выполнено успешно
  * @return EXIT_FAILURE - произошла ошибка
  */
-bool print_file(const char *path_file, Flags *flags);
+bool print_file(const char *argv, Flags *flags);
 
 /**
  * /Отображение непечатаемых символов

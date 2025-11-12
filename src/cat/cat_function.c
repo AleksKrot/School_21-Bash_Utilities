@@ -55,9 +55,9 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
   return error;
 }
 
-bool print_file(const char *path_file, Flags *flags) {
+bool print_file(const char *argv, Flags *flags) {
   bool error = false;
-  FILE *file = open_file(path_file, flags, &error);
+  FILE *file = open_file(argv, flags, &error);
   if (!error) {
     int c;  // Для хранения текущего символа
     int last_c = flags->last_c_file;  // Для предыдущего символа
