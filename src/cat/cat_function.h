@@ -11,8 +11,8 @@
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool process_files(int argc, char *argv[], Flags *flags);
 
@@ -21,8 +21,8 @@ bool process_files(int argc, char *argv[], Flags *flags);
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool parse_arguments(int argc, char *argv[], Flags *flags);
 
@@ -30,8 +30,8 @@ bool parse_arguments(int argc, char *argv[], Flags *flags);
  * Чтение и вывода результата
  * @param path_file - путь к файлу
  * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool print_file(const char *path_file, Flags *flags);
 
