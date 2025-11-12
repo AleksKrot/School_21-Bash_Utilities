@@ -11,23 +11,24 @@
 #define FAILURE 1
 
 /**
- * Инициализация флагов
+ * Обработка аргументов и вывод результата
+ * @param argc - количество аргументов командной строки
+ * @param argv - массив аргументов командной строки
  * @param flags - флаги
+ * @return SUCCESS - выполнено успешно
+ * @return FAILURE - произошла ошибка
  */
-void init_flags(Flags *flags);
+bool process_files(int argc, char *argv[], Flags *flags);
 
 /**
  * Парсинг аргументов
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @param path_file - путь к файлу
- * @param count_files - количество файлов
  * @return SUCCESS - выполнено успешно
  * @return FAILURE - произошла ошибка
  */
-bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
-                     int *count_files);
+bool parse_arguments(int argc, char *argv[], Flags *flags);
 
 /**
  * Чтение и вывода результата

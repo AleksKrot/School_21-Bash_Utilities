@@ -5,6 +5,8 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
   int opt;
   int count = 0;
   bool error = false;
+bool process_files(int argc, char *argv[], Flags *flags) {
+bool parse_arguments(int argc, char *argv[], Flags *flags) {
   const struct option long_opt[] = {{"number-nonblank", no_argument, 0, 'b'},
                                     {"number", no_argument, 0, 'n'},
                                     {"squeeze-blank", no_argument, 0, 's'},
@@ -42,7 +44,7 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
         break;
     }
   }
-  collect_files(argc, argv, path_file, count_files);
+  collect_files(argc, argv);
   return error;
 }
 

@@ -39,10 +39,7 @@ void print_error() {
 #endif
 }
 
-void handle_flag_error(const Flags *flags, int *count, char invalid_opt,
-                       bool *error) {
-  (*count)++;
-  if (*count == 1) {
+void handle_flag_error(const Flags *flags, char invalid_opt) {
     if (invalid_opt == 'f' && strcmp(flags->program_name, "grep") == 0) {
       printf("%s: option requires an argument -- 'f'\n", flags->program_name);
     } else {
@@ -56,8 +53,7 @@ void handle_flag_error(const Flags *flags, int *count, char invalid_opt,
   }
 }
 
-void collect_files(int argc, char *argv[], char *path_file[],
-                   int *count_files) {
+void collect_files(int argc, char *argv[]) {
   for (int i = optind; i < argc; i++) {
     path_file[(*count_files)++] = argv[i];
   }

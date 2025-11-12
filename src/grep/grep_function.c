@@ -67,8 +67,7 @@ void handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
   }
 }
 
-bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
-                     int *count_files) {
+bool parse_arguments(int argc, char *argv[], Flags *flags) {
   int opt;
   int count = 0;
   bool error = false;
@@ -110,13 +109,13 @@ bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
         break;
       default:
         flags->error = true;
-        handle_flag_error(flags, &count, optopt, &error);
+        handle_flag_error(flags, optopt);
         opt = -1;
         break;
     }
   }
   handle_empty_patterns(argc, argv, flags, &optind);
-  collect_files(argc, argv, path_file, count_files);
+  collect_files(argc, argv);
   if (*count_files > 1) {
     flags->multi_files = true;
   }

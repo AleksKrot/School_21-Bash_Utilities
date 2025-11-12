@@ -49,13 +49,10 @@ void handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind);
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @param path_file - путь к файлу
- * @param count_files
  * @return SUCCESS - выполнено успешно
  * @return FAILURE - произошла ошибка
  */
-bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
-                     int *count_files);
+bool parse_arguments(int argc, char *argv[], Flags *flags);
 
 /**
  * Обработка одного шаблона

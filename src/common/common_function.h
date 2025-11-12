@@ -61,21 +61,16 @@ bool process_files(int argc, char *argv[], Flags *flags);
 /**
  * Обработка ошибок
  * @param flags - флаги
- * @param count - количество аргументов
  * @param invalid_opt - ошибочный аргумент
- * @param error - ошибка
  */
-void handle_flag_error(const Flags *flags, int *count, char invalid_opt,
-                       bool *error);
+void handle_flag_error(const Flags *flags, char invalid_opt);
 
 /**
  * Сбор массива файлов
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
- * @param path_file - путь к файлу
- * @param count_files - количество файлов
  */
-void collect_files(int argc, char *argv[], char *path_file[], int *count_files);
+void collect_files(int argc, char *argv[]);
 
 /**
  * Открытие файла
