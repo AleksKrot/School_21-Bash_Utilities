@@ -54,16 +54,6 @@ void init_flags(Flags *flags);
 void print_error();
 
 /**
- * Обработка аргументов и вывод результата
- * @param argc - количество аргументов командной строки
- * @param argv - массив аргументов командной строки
- * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
- */
-bool process_files(int argc, char *argv[], Flags *flags);
-
-/**
  * Обработка ошибок
  * @param flags - флаги
  * @param invalid_opt - ошибочный аргумент

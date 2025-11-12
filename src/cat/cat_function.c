@@ -1,12 +1,19 @@
 #include "cat_function.h"
 
-bool parse_arguments(int argc, char *argv[], Flags *flags, char *path_file[],
-                     int *count_files) {
-  int opt;
-  int count = 0;
-  bool error = false;
 bool process_files(int argc, char *argv[], Flags *flags) {
+  bool error = EXIT_SUCCESS;
+  if (argc < 2) {
+    print_error();
+    error = EXIT_FAILURE;
+  } else {
+    error = parse_arguments(argc, argv, flags);
+  }
+  return error;
+}
+
 bool parse_arguments(int argc, char *argv[], Flags *flags) {
+  int opt = 0;
+  bool error = EXIT_SUCCESS;
   const struct option long_opt[] = {{"number-nonblank", no_argument, 0, 'b'},
                                     {"number", no_argument, 0, 'n'},
                                     {"squeeze-blank", no_argument, 0, 's'},
