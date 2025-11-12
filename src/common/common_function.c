@@ -52,7 +52,7 @@ void handle_flag_error(const Flags *flags, char invalid_opt) {
 
 void collect_files(int argc, char *argv[]) {
   for (int i = optind; i < argc; i++) {
-    path_file[(*count_files)++] = argv[i];
+    argv[argc++] = argv[i];
   }
 }
 
