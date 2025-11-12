@@ -39,7 +39,6 @@ typedef struct Flags {
   bool n;
   bool s;
   bool v;
-  bool error;
   const char *program_name;
 } Flags;
 

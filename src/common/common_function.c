@@ -26,7 +26,6 @@ void init_flags(Flags *flags) {
   flags->n = false;
   flags->s = false;
   flags->v = false;
-  flags->error = false;
 }
 
 void print_error() {
@@ -49,8 +48,6 @@ void handle_flag_error(const Flags *flags, char invalid_opt) {
       printf("Usage: %s [OPTION]... PATTERNS [FILE]...\n", flags->program_name);
     }
     printf("Try '%s --help' for more information.\n", flags->program_name);
-    *error = true;
-  }
 }
 
 void collect_files(int argc, char *argv[]) {

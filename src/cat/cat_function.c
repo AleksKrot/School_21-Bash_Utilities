@@ -38,8 +38,8 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         flags->v = true;
         break;
       default:
-        flags->error = true;
-        handle_flag_error(flags, &count, optopt, &error);
+        error = EXIT_FAILURE;
+        handle_flag_error(flags, optopt);
         opt = -1;
         break;
     }

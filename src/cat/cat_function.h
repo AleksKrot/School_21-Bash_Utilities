@@ -7,9 +7,6 @@
 
 #include "../common/common_function.h"
 
-#define SUCCESS 0
-#define FAILURE 1
-
 /**
  * Обработка аргументов и вывод результата
  * @param argc - количество аргументов командной строки
