@@ -43,6 +43,12 @@ typedef struct Flags {
 } Flags;
 
 /**
+ * Инициализация флагов
+ * @param flags - флаги
+ */
+void init_flags(Flags *flags);
+
+/**
  * Вывод сообщения об ошибке
  */
 void print_error();
