@@ -1,8 +1,7 @@
 #ifndef CAT_FUNCTION_H
 #define CAT_FUNCTION_H
 
-#define CAT
-
+#include <stdlib.h>
 #include <getopt.h>
 
 #include "../common/common_function.h"
