@@ -6,8 +6,9 @@ int main(const int argc, char *argv[]) {
   Flags flags;
   init_flags(&flags);
   error = process_files(argc, argv, &flags);
-  for (int i = 0; i < argc; i++) {
-    if (print_file(argv[i], &flags) != 0) {
+  for (int i = optind; i < argc; i++) {
+    char * program_name = "cat";
+    if (print_file(argv[i], &flags, program_name) != 0) {
       error = true;
     }
   }
