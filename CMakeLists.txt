@@ -20,3 +20,10 @@ add_executable(s21_grep_test
         src/grep/grep_function.h
         src/common/common_function.c
         src/common/common_function.h)
+
+add_executable(s21_cat
+        src/cat/cat.c
+        src/cat/cat_function.c
+        src/cat/cat_function.h
+        src/common/common_function.c
+        src/common/common_function.h)
