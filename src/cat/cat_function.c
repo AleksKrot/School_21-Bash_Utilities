@@ -20,8 +20,8 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
                                     {0, 0, 0, 0}};
   while ((opt = getopt_long(argc, argv, "beEnstT", long_opt, NULL)) != -1) {
     switch (opt) {
-      case 'b':
-        flags->b = true;
+      case 'n':
+        flags->n = true;
         break;
       case 'e':
         flags->e = flags->v = true;
@@ -29,8 +29,9 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
       case 'E':
         flags->E = true;
         break;
-      case 'n':
-        flags->n = true;
+      case 'b':
+        flags->b = true;
+        flags->n = false;
         break;
       case 's':
         flags->s = true;
