@@ -3,7 +3,7 @@
 bool process_files(int argc, char *argv[], Flags *flags) {
   bool error = EXIT_SUCCESS;
   if (argc < 2) {
-    print_error();
+    printf("cat: No files specified\n");
     error = EXIT_FAILURE;
   } else {
     error = parse_arguments(argc, argv, flags);
@@ -12,8 +12,8 @@ bool process_files(int argc, char *argv[], Flags *flags) {
 }
 
 bool parse_arguments(int argc, char *argv[], Flags *flags) {
-  int opt = 0;
   bool error = EXIT_SUCCESS;
+  int opt = 0;
   const struct option long_opt[] = {{"number-nonblank", no_argument, 0, 'b'},
                                     {"number", no_argument, 0, 'n'},
                                     {"squeeze-blank", no_argument, 0, 's'},
@@ -46,26 +46,30 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         break;
       default:
         error = EXIT_FAILURE;
-        handle_flag_error(flags, optopt);
+        cat_flag_error(optopt);
         opt = -1;
         break;
     }
   }
-  collect_files(argc, argv);
   return error;
 }
 
-bool print_file(const char *argv, Flags *flags) {
+void cat_flag_error(char invalid_opt) {
+  printf("cat: invalid option -- '%c'\n", invalid_opt);
+  printf("Try 'cat --help' for more information.\n");
+}
+
+bool print_file(char *argv, Flags *flags, char *program_name) {
   bool error = false;
-  FILE *file = open_file(argv, flags, &error);
+  FILE *file = open_file(argv, flags, program_name, &error);
   if (!error) {
-    int c;  // Для хранения текущего символа
-    int last_c = flags->last_c_file;  // Для предыдущего символа
-    int count_line_break = 0;  // Для подсчёта количества переносов строк
-    while ((c = getc(file)) != EOF) {
+    int current_symbol;
+    int previous_symbol = flags->end_file_symbol;
+    int count_line_break = 0;
+    while ((current_symbol = getc(file)) != EOF) {
       int should_print = 1;
       if (flags->s) {
-        if (c == '\n' && last_c == '\n') {
+        if (current_symbol == '\n' && previous_symbol == '\n') {
           count_line_break++;
         } else {
           count_line_break = 0;
@@ -75,28 +79,28 @@ bool print_file(const char *argv, Flags *flags) {
         }
       }
       if (should_print && (flags->n || flags->b) &&
-          (last_c == EOF || last_c == '\n')) {
-        if ((flags->b && c != '\n') || (flags->n && !flags->b)) {
+          (previous_symbol == EOF || previous_symbol == '\n')) {
+        if ((flags->b && current_symbol != '\n') || (flags->n && !flags->b)) {
           printf("%6d\t", flags->num++);
         }
       }
-      if (should_print && (flags->E || flags->e) && c == '\n') {
+      if (should_print && (flags->E || flags->e) && current_symbol == '\n') {
         putchar('$');
       }
-      if (should_print && (flags->T || flags->t) && c == '\t') {
+      if (should_print && (flags->T || flags->t) && current_symbol == '\t') {
         printf("^I");
         should_print = 0;
       }
       if (should_print && flags->v) {
-        show_nonprinting(c);
+        show_nonprinting(current_symbol);
         should_print = 0;
       }
       if (should_print) {
-        putchar(c);
+        putchar(current_symbol);
       }
-      last_c = c;
+      previous_symbol = current_symbol;
     }
-    flags->last_c_file = last_c;
+    flags->end_file_symbol = previous_symbol;
     fclose(file);
   }
   return error;
