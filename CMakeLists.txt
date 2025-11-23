@@ -7,23 +7,23 @@ include_directories(src/cat)
 include_directories(src/common)
 include_directories(src/grep)
 
-add_executable(s21_cat_test
-        src/cat/cat_test.c
-        src/cat/cat_function.c
-        src/cat/cat_function.h
+add_executable(my_cat_test
+        src/cat/my_cat_test.c
+        src/cat/my_cat_function.c
+        src/cat/my_cat_function.h
         src/common/common_function.c
         src/common/common_function.h)
 
-add_executable(s21_grep_test
+add_executable(my_grep_test
         src/grep/grep_test.c
         src/grep/grep_function.c
         src/grep/grep_function.h
         src/common/common_function.c
         src/common/common_function.h)
 
-add_executable(s21_cat
-        src/cat/cat.c
-        src/cat/cat_function.c
-        src/cat/cat_function.h
+add_executable(my_cat
+        src/cat/my_cat.c
+        src/cat/my_cat_function.c
+        src/cat/my_cat_function.h
         src/common/common_function.c
         src/common/common_function.h)

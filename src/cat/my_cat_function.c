@@ -1,4 +1,4 @@
-#include "cat_function.h"
+#include "my_cat_function.h"
 
 bool process_files(int argc, char *argv[], Flags *flags) {
   bool error = EXIT_SUCCESS;

@@ -1,4 +1,4 @@
-#include "cat_function.h"
+#include "my_cat_function.h"
 
 int main(const int argc, char *argv[]) {
   bool error = EXIT_SUCCESS;

@@ -2,31 +2,36 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -std=c11 -pedantic -D_POSIX_C_SOURCE=200809L
 SRC_DIR = .
 COMMON_DIR = ../common
+BUILD_DIR = ../../build
 
-.PHONY: all s21_cat test clean rebuild clang_format lint cppcheck valgrind
+all: my_cat
+.PHONY: all
 
-all: s21_cat test clang_format lint cppcheck valgrind
+my_cat:
+		$(CC) $(CFLAG) $(SRC_DIR)/my_cat.c $(SRC_DIR)/my_cat_function.c $(COMMON_DIR)/common_function.c -o $(BUILD_DIR)/my_cat
+.PHONY: my_cat
 
-s21_cat:
-		$(CC) $(CFLAG) $(SRC_DIR)/cat.c $(SRC_DIR)/cat_function.c $(COMMON_DIR)/common_function.c -o $(SRC_DIR)/s21_cat
-
-test:
-		$(CC) $(CFLAG) $(SRC_DIR)/cat_test.c $(SRC_DIR)/cat_function.c $(COMMON_DIR)/common_function.c -o $(SRC_DIR)/cat_test
-		$(SRC_DIR)/cat_test
+test:	my_cat
+		$(CC) $(CFLAG) $(SRC_DIR)/my_cat_test.c $(SRC_DIR)/my_cat_function.c $(COMMON_DIR)/common_function.c -o $(BUILD_DIR)/my_cat_test
+		$(BUILD_DIR)/my_cat_test
+.PHONY: test
 
 clean: 
-		rm -f $(SRC_DIR)/s21_cat $(SRC_DIR)/cat_test $(SRC_DIR)/*.txt
+		rm -f $(BUILD_DIR)/my_cat $(BUILD_DIR)/my_cat_test $(BUILD_DIR)/*.txt
+.PHONY: clean
 
-rebuild: clean all
-
-clang_format:
-		clang-format -i $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(COMMON_DIR)/*.c $(COMMON_DIR)/*.h
-
-lint: 
+cfn:
 		clang-format -n $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(COMMON_DIR)/*.c $(COMMON_DIR)/*.h
+.PHONY: cfn
+
+cfi:
+		clang-format -i $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(COMMON_DIR)/*.c $(COMMON_DIR)/*.h
+.PHONY: cfi
 
 cppcheck:
 		cppcheck --enable=all --suppress=missingIncludeSystem $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(COMMON_DIR)/*.c $(COMMON_DIR)/*.h
+.PHONY: cppcheck
 
-valgrind: 
-		valgrind --tool=memcheck --leak-check=yes $(SRC_DIR)/s21_cat -benst *.txt
+valgrind: test
+		valgrind --tool=memcheck --leak-check=yes $(SRC_DIR)/my_cat -benst *.txt
+.PHONY: valgrind

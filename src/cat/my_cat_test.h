@@ -5,15 +5,17 @@
 #include <string.h>
 
 #define COMMAND "cat"
-#define COMMAND_S21 "./s21_cat"
-#define TEST_FILE1 "Test1.txt"
-#define TEST_FILE2 "Test2.txt"
-#define NON_EXISTENT_FILE "NonexistentTest.txt"
+#define MY_COMMAND "../../build/my_cat"
+#define OUTPUT_FILE "../../build/cat_output.txt"
+#define MY_OUTPUT_FILE "../../build/my_cat_output.txt"
+#define TEST_FILE1 "../../build/Test1.txt"
+#define TEST_FILE2 "../../build/Test2.txt"
+#define NON_EXISTENT_FILE "../../build/NonexistentTest.txt"
 
 typedef struct {
   const char *description;
   const char *command;
-  const char *command_s21;
+  const char *my_command;
 } TestCase;
 
 /**
@@ -25,18 +27,16 @@ void create_test_files();
  * Создание выходных файлов
  * @param command - команда для стандартной функции cat
  * @param cat_output - вывод стандартной функции cat
- * @param command_s21 - команда для функции s21_cat
- * @param s21_cat_output - вывод функции s21_cat
+ * @param my_command - команда для функции my_cat
+ * @param my_cat_output - вывод функции my_cat
  */
 void create_output_files(const char *command, const char *cat_output,
-                         const char *command_s21, const char *s21_cat_output);
+                         const char *my_command, const char *my_cat_output);
 
 /**
  * Сравнение выходных файлов
- * @param cat_output - вывод стандартной функции cat
- * @param s21_cat_output - вывод функции s21_cat
  */
-void compare_files(const char *cat_output, const char *s21_cat_output);
+void compare_files();
 
 /**
  * Запуск одного теста
