@@ -7,7 +7,7 @@ int main(const int argc, char *argv[]) {
   init_flags(&flags);
   error = process_files(argc, argv, &flags);
   for (int i = optind; i < argc; i++) {
-    char * program_name = "cat";
+    const char *program_name = "cat";
     if (print_file(argv[i], &flags, program_name) != 0) {
       error = true;
     }

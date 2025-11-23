@@ -22,7 +22,7 @@ void init_flags(Flags *flags) {
   flags->multi_files = false;
 }
 
-FILE *open_file(const char *argv, const Flags *flags, char *program_name,
+FILE *open_file(const char *argv, const Flags *flags, const char *program_name,
                 bool *error) {
   FILE *file = NULL;
   file = fopen(argv, "r");

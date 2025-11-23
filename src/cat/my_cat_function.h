@@ -40,7 +40,7 @@ void cat_flag_error(char invalid_opt);
  * @return EXIT_SUCCESS - выполнено успешно
  * @return EXIT_FAILURE - произошла ошибка
  */
-bool print_file(const char *argv, Flags *flags, char *program_name);
+bool print_file(const char *argv, Flags *flags, const char *program_name);
 
 /**
  * /Отображение непечатаемых символов

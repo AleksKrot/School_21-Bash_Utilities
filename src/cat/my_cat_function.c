@@ -60,7 +60,7 @@ void cat_flag_error(char invalid_opt) {
   printf("Try 'cat --help' for more information.\n");
 }
 
-bool print_file(const char *argv, Flags *flags, char *program_name) {
+bool print_file(const char *argv, Flags *flags, const char *program_name) {
   bool error = false;
   FILE *file = open_file(argv, flags, program_name, &error);
   if (!error) {
@@ -115,10 +115,10 @@ void show_nonprinting(int c) {
   if (c == '\n' || c == '\t' || (c >= 32 && c <= 126)) {
     putchar(c);
   } else if (c < 32) {
-      putchar('^');
-      putchar(c + 64);
+    putchar('^');
+    putchar(c + 64);
   } else if (c == 127) {
-      putchar('^');
-      putchar(c - 64);
+    putchar('^');
+    putchar(c - 64);
   }
 }

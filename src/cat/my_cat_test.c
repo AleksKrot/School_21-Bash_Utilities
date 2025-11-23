@@ -117,8 +117,7 @@ void run_test_case(TestCase test) {
 
   printf("Test: %s...\n", test.description);
 
-  create_output_files(test.command, cat_output, test.my_command,
-                      my_cat_output);
+  create_output_files(test.command, cat_output, test.my_command, my_cat_output);
   compare_files();
 }
 

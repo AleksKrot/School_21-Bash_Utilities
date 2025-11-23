@@ -42,7 +42,7 @@ void init_flags(Flags *flags);
  * @param error -ошибка
  * @return указатель на открытый файл
  */
-FILE *open_file(const char *argv, const Flags *flags, char *program_name,
+FILE *open_file(const char *argv, const Flags *flags, const char *program_name,
                 bool *error);
 
 #endif

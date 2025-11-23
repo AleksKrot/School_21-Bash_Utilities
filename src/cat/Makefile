@@ -33,5 +33,5 @@ cppcheck:
 .PHONY: cppcheck
 
 valgrind: test
-		valgrind --tool=memcheck --leak-check=yes $(SRC_DIR)/my_cat -benst *.txt
+		valgrind --tool=memcheck --leak-check=yes $(BUILD_DIR)/my_cat_test
 .PHONY: valgrind
