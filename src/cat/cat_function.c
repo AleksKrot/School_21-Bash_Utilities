@@ -108,28 +108,17 @@ bool print_file(const char *argv, Flags *flags, char *program_name) {
 }
 
 void show_nonprinting(int c) {
-  if (c != '\n' && c != '\t') {
-    if (c < 32) {
+  if (c >= 128) {
+    printf("M-");
+    c = c - 128;
+  }
+  if (c == '\n' || c == '\t' || (c >= 32 && c <= 126)) {
+    putchar(c);
+  } else if (c < 32) {
       putchar('^');
       putchar(c + 64);
-    } else if (c == 127) {
+  } else if (c == 127) {
       putchar('^');
       putchar(c - 64);
-    } else if (c > 127) {
-      printf("M-");
-      if (c - 128 < 32) {
-        putchar('^');
-        putchar(c - 128 + 64);
-      } else if (c - 128 == 127) {
-        putchar('^');
-        putchar(c - 128 - 64);
-      } else {
-        putchar(c - 128);
-      }
-    } else {
-      putchar(c);
-    }
-  } else {
-    putchar(c);
   }
 }
