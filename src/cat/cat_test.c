@@ -1,7 +1,5 @@
 #include "cat_test.h"
 
-#include "../cat/cat_function.h"
-
 void create_test_files() {
   FILE *f1 = fopen(TEST_FILE1, "w");
   FILE *f2 = fopen(TEST_FILE2, "w");

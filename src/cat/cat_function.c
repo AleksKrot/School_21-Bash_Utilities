@@ -60,7 +60,7 @@ void cat_flag_error(char invalid_opt) {
   printf("Try 'cat --help' for more information.\n");
 }
 
-bool print_file(char *argv, Flags *flags, char *program_name) {
+bool print_file(const char *argv, Flags *flags, char *program_name) {
   bool error = false;
   FILE *file = open_file(argv, flags, program_name, &error);
   if (!error) {

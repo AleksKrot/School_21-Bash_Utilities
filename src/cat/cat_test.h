@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/common_function.h"
-
 #define COMMAND "cat"
 #define COMMAND_S21 "./s21_cat"
 #define TEST_FILE1 "Test1.txt"
