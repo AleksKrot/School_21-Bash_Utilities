@@ -44,8 +44,8 @@ bool print_file(const char *argv, Flags *flags, const char *program_name);
 
 /**
  * /Отображение непечатаемых символов
- * @param c - символ
+ * @param symbol - символ
  */
-void show_nonprinting(int c);
+void show_nonprinting(int symbol);
 
 #endif

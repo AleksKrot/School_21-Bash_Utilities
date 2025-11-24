@@ -107,18 +107,18 @@ bool print_file(const char *argv, Flags *flags, const char *program_name) {
   return error;
 }
 
-void show_nonprinting(int c) {
-  if (c >= 128) {
+void show_nonprinting(int symbol) {
+  if (symbol >= 128) {
     printf("M-");
-    c = c - 128;
+    symbol = symbol - 128;
   }
-  if (c == '\n' || c == '\t' || (c >= 32 && c <= 126)) {
-    putchar(c);
-  } else if (c < 32) {
+  if (symbol == '\n' || symbol == '\t' || (symbol >= 32 && symbol <= 126)) {
+    putchar(symbol);
+  } else if (symbol < 32) {
     putchar('^');
-    putchar(c + 64);
-  } else if (c == 127) {
+    putchar(symbol + 64);
+  } else if (symbol == 127) {
     putchar('^');
-    putchar(c - 64);
+    putchar(symbol - 64);
   }
 }
