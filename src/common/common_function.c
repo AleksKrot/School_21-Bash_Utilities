@@ -30,7 +30,7 @@ FILE *open_file(const char *argv, const Flags *flags, const char *program_name,
     if (flags->s == false) {
       printf("%s: %s: No such file or directory\n", program_name, argv);
     }
-    *error = true;
+    *error = EXIT_FAILURE;
   }
   return file;
 }
