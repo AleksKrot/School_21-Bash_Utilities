@@ -36,11 +36,10 @@ void cat_flag_error(char invalid_opt);
  * Чтение и вывода результата
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @param program_name
  * @return EXIT_SUCCESS - выполнено успешно
  * @return EXIT_FAILURE - произошла ошибка
  */
-bool print_file(const char *argv, Flags *flags, const char *program_name);
+bool print_file(const char *argv, Flags *flags);
 
 /**
  * /Отображение непечатаемых символов
