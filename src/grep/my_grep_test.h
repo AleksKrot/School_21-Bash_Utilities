@@ -1,14 +1,28 @@
 #ifndef GREP_TEST_H
 #define GREP_TEST_H
 
-#define POSIX_C_SOURCE 200809L
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "my_grep_function.h"
+
+#define COMMAND "grep"
+#define MY_COMMAND "./my_grep"
+#define OUTPUT_FILE "cat_output.txt"
+#define MY_OUTPUT_FILE "my_cat_output.txt"
+#define PATTERN_1 "kitty"
+#define PATTERN_2 "little"
+#define TEST_FILE1 "Test1.txt"
+#define TEST_FILE2 "Test2.txt"
+#define EMPTY_FILE "Empty.txt"
+#define NON_EXISTENT_FILE "NonexistentTest.txt"
+#define PATTERN_FILE "Pattern.txt"
 
 typedef struct {
   const char *description;
   const char *command;
-  const char *command_s21;
+  const char *my_command;
 } TestCase;
 
 /**
@@ -19,19 +33,14 @@ void create_test_files();
 /**
  * Создание выходных файлов
  * @param command - команда для стандартной функции grep
- * @param grep_output - вывод стандартной функции grep
- * @param command_s21 - команда для функции s21_grep
- * @param s21_grep_output - вывод функции s21_grep
+ * @param my_command - команда для функции my_grep
  */
-void create_output_files(const char *command, const char *grep_output,
-                         const char *command_s21, const char *s21_grep_output);
+void create_output_files(const char *command, const char *my_command);
 
 /**
  * Сравнение выходных файлов
- * @param grep_output - вывод стандартной функции grep
- * @param s21_grep_output - вывод функции s21_grep
  */
-void compare_files(const char *grep_output, const char *s21_grep_output);
+void compare_files(void);
 
 /**
  * Запуск одного теста
