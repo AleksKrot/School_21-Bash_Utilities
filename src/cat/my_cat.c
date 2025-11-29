@@ -7,9 +7,7 @@ int main(const int argc, char *argv[]) {
   init_flags(&flags);
   error = process_files(argc, argv, &flags);
   for (int i = optind; i < argc; i++) {
-    if (print_file(argv[i], &flags) != 0) {
-      error = true;
-    }
+    error = print_file(argv[i], &flags);
   }
   return error;
 }
