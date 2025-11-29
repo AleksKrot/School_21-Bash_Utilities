@@ -1,6 +1,7 @@
 #include "my_cat_test.h"
 
 void create_test_files() {
+  system("mkdir -p ../../build");
   FILE *f1 = fopen(TEST_FILE1, "w");
   FILE *f2 = fopen(TEST_FILE2, "w");
   if (f1 == NULL || f2 == NULL) {
@@ -8,25 +9,25 @@ void create_test_files() {
     if (f1 != NULL) {
       fclose(f1);
     }
-      if (f2 != NULL) {
+    if (f2 != NULL) {
       fclose(f2);
     }
-      return;
+    return;
   }
-    fprintf(f1,
-            "\tSoft kitty, warm kitty,\n\n\n\tLittle ball of fur,\n\n\n\tHappy "
-            "kitty, sleepy kitty,\n\n\n\tPurr! purr! purr!\n\n\n\x01\x7F\xFF");
-    fprintf(
-        f2,
-        "Freddy Krueger\nOne, Two, Freddy's coming for you,\nThree, Four, "
-        "better lock your door,\n\n\nFive, Six, grab your crucifix,\nSeven, "
-        "Eight, gonna stay up late,\nNine, Ten, never sleep "
-        "again...\n\n\n\t\x05\x8F\xFF\n");
-    fclose(f1);
-    fclose(f2);
+  fprintf(f1,
+          "\tSoft kitty, warm kitty,\n\n\n\tLittle ball of fur,\n\n\n\tHappy "
+          "kitty, sleepy kitty,\n\n\n\tPurr! purr! purr!\n\n\n\x01\x7F\xFF");
+  fprintf(f2,
+          "Freddy Krueger\nOne, Two, Freddy's coming for you,\nThree, Four, "
+          "better lock your door,\n\n\nFive, Six, grab your crucifix,\nSeven, "
+          "Eight, gonna stay up late,\nNine, Ten, never sleep "
+          "again...\n\n\n\t\x05\x8F\xFF\n");
+  fclose(f1);
+  fclose(f2);
 }
 
 void create_output_files(const char *command, const char *my_command) {
+  system("mkdir -p ../../build");
   char full_command[512];
   char my_full_command[512];
   FILE *cmd_output = NULL;

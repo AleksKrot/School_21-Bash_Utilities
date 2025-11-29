@@ -2,6 +2,7 @@
 #define CAT_TEST_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define COMMAND "cat"
