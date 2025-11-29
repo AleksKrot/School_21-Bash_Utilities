@@ -1,80 +1,23 @@
-#include "grep_function.h"
+#include "my_grep_function.h"
 
-#include <stdlib.h>
-
-bool add_pattern(Flags *flags, const char *pattern) {
-  bool error = false;
-  char **temp = realloc(flags->pattern,
-                        (flags->count_pattern + 1) * sizeof(char *));
-  if (temp == NULL) {
-    printf("Failed to allocate memory for pattern array");
-    error = true;
-  } else {
-    flags->pattern = temp;
-    char *new_pattern = strdup(pattern);
-    if (new_pattern == NULL) {
-      printf("Failed to allocate memory for new pattern");
-      free(flags->pattern);
-      flags->pattern = NULL;
-      flags->count_pattern = 0;
-      error = true;
-    } else {
-      flags->pattern[flags->count_pattern] = new_pattern;
-      flags->count_pattern++;
-    }
-  }
-  return error;
-}
-
-bool pattern_for_file(const char *path_file, Flags *flags) {
-  bool error = false;
-  char *line = NULL;
-  FILE *file = open_file(path_file, flags, &error);
-  if (!error) {
-    size_t len = 0;
-    ssize_t read;
-    while ((read = getline(&line, &len, file)) != -1 && !error) {
-      if (read > 0 && line[read - 1] == '\n') {
-        line[read - 1] = '\0';
-        read--;
-      }
-      if (read > 0) {
-        if (add_pattern(flags, line) == true) {
-          error = true;
-        }
-      }
-    }
-    fclose(file);
-  }
-  if (line != NULL) {
-    free(line);
-  }
-  return error;
-}
-
-void handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
-  if (!flags->count_pattern) {
-    if (*optind < argc) {
-      if (add_pattern(flags, argv[*optind])) {
-        flags->error = true;
-      }
-      (*optind)++;
-    } else if (!flags->error) {
+bool process_files(int argc, char *argv[], Flags *flags) {
+  bool error = EXIT_SUCCESS;
+  if (argc < 2) {
       printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
       printf("Try 'grep --help' for more information.\n");
-      flags->error = true;
-    }
+  } else {
+    error = parse_arguments(argc, argv, flags);
   }
+  return error;
 }
 
 bool parse_arguments(int argc, char *argv[], Flags *flags) {
-  int opt;
-  int count = 0;
-  bool error = false;
+  bool error = EXIT_SUCCESS;
+  int opt = 0;
   while ((opt = getopt(argc, argv, "e:ivclnhsf:o")) != -1) {
     switch (opt) {
       case 'e':
-        if (add_pattern(flags, optarg)) {
+        if ((error = add_pattern(flags, optarg)) == EXIT_FAILURE) {
           opt = -1;
         }
         break;
@@ -100,7 +43,7 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         flags->s = true;
         break;
       case 'f':
-        if (pattern_for_file(optarg, flags)) {
+        if ((error = pattern_for_file(optarg, flags)) == EXIT_FAILURE) {
           opt = -1;
         }
         break;
@@ -108,19 +51,105 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         flags->o = true;
         break;
       default:
-        flags->error = true;
-        handle_flag_error(flags, optopt);
+        error = EXIT_FAILURE;
+        grep_flag_error(optopt);
         opt = -1;
         break;
     }
   }
-  handle_empty_patterns(argc, argv, flags, &optind);
-  collect_files(argc, argv);
-  if (*count_files > 1) {
-    flags->multi_files = true;
+  error = handle_empty_patterns(argc, argv, flags, &optind);
+  return error;
+}
+
+bool add_pattern(Flags *flags, const char *pattern) {
+  bool error = EXIT_SUCCESS;
+  char **temp = realloc(flags->pattern,
+                        (flags->count_pattern + 1) * sizeof(char *));
+  if (temp == NULL) {
+    printf("Failed to allocate memory for pattern array");
+    error = EXIT_FAILURE;
+  } else {
+    flags->pattern = temp;
+    char *new_pattern = strdup(pattern);
+    if (new_pattern == NULL) {
+      printf("Failed to allocate memory for new pattern");
+      free(flags->pattern);
+      flags->pattern = NULL;
+      flags->count_pattern = 0;
+      error = EXIT_FAILURE;
+    } else {
+      flags->pattern[flags->count_pattern++] = new_pattern;
+    }
   }
   return error;
 }
+
+void free_flags(Flags *flags) {
+  if (flags->pattern != NULL) {
+    for (int i = 0; i < flags->count_pattern; i++) {
+      free(flags->pattern[i]);
+    }
+    free(flags->pattern);
+    flags->pattern = NULL;
+    flags->count_pattern = 0;
+  }
+  if (flags->f != NULL) {
+    free(flags->f);
+    flags->f = NULL;
+  }
+}
+
+bool pattern_for_file(const char *path_file, Flags *flags) {
+  bool error = EXIT_SUCCESS;
+  const char *program_name = "grep";
+  FILE *file = open_file(path_file, flags, program_name, &error);
+  if (!error) {
+    size_t len = 0;
+    ssize_t read;
+    char *line = NULL;
+    while ((read = getline(&line, &len, file)) != -1 && !error) {
+      if (read > 0 && line[read - 1] == '\n') {
+        line[read - 1] = '\0';
+        read--;
+      }
+      if (read > 0) {
+        error = add_pattern(flags, line);
+        flags->multi_files = true;
+      }
+      if (line != NULL) {
+        free(line);
+      }
+    }
+    fclose(file);
+  }
+  return error;
+}
+
+void grep_flag_error(char invalid_opt) {
+  if (invalid_opt == 'f') {
+    printf("grep: option requires an argument -- 'f'\n");
+  } else {
+    printf("grep: invalid option -- '%c'\n", invalid_opt);
+  }
+  printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
+  printf("Try 'grep --help' for more information.\n");
+}
+
+bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
+  bool error = EXIT_SUCCESS;
+  if (!flags->count_pattern) {
+    if (*optind < argc) {
+      error = add_pattern(flags, argv[*optind]);
+      (*optind)++;
+    }
+    if (error == EXIT_FAILURE) {
+      printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
+      printf("Try 'grep --help' for more information.\n");
+    }
+  }
+  return error;
+}
+
 
 void print_file_info(const char *path_file, const Flags *flags,
                      int line_number) {
@@ -169,14 +198,15 @@ bool handle_single_pattern(const char *line, const char *path_file,
 
 bool print_file(const char *argv, Flags *flags) {
   bool error = false;
-  char *line = NULL;
-  FILE *file = open_file(argv, flags, &error);
+  const char *program_name = "grep";
+  FILE *file = open_file(argv, flags, program_name, &error);
   if (!error) {
     size_t len = 0;
     ssize_t read;
     int line_number = 0;
     int match_count = 0;
     bool file_already_printed = false;
+    char *line = NULL;
     while ((read = getline(&line, &len, file)) != -1 &&
            (!flags->l || !file_already_printed)) {
       line_number++;
@@ -209,27 +239,12 @@ bool print_file(const char *argv, Flags *flags) {
         file_already_printed = true;
       }
     }
+    free(line);
     if (flags->c && !file_already_printed) {
       print_file_info(argv, flags, line_number);
       printf("%d\n", match_count);
     }
     fclose(file);
   }
-  free(line);
   return error;
-}
-
-void free_flags(Flags *flags) {
-  if (flags->pattern != NULL) {
-    for (int i = 0; i < flags->count_pattern; i++) {
-      free(flags->pattern[i]);
-    }
-    free(flags->pattern);
-    flags->pattern = NULL;
-    flags->count_pattern = 0;
-  }
-  if (flags->f != NULL) {
-    free(flags->f);
-    flags->f = NULL;
-  }
 }

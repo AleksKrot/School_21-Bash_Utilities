@@ -1,28 +1,42 @@
 #ifndef GREP_FUNCTION_H
 #define GREP_FUNCTION_H
 
-#define GREP
-
 #include <regex.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <getopt.h>
+#include <stdlib.h>
 
 #include "../common/common_function.h"
 
 /**
- * Инициализация флагов
+ * Обработка аргументов и вывод результата
+ * @param argc - количество аргументов командной строки
+ * @param argv - массив аргументов командной строки
  * @param flags - флаги
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
-void init_flags(Flags *flags);
+bool process_files(int argc, char *argv[], Flags *flags);
+
+/**
+ * Парсинг аргументов
+ * @param argc - количество аргументов командной строки
+ * @param argv - массив аргументов командной строки
+ * @param flags - флаги
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
+ */
+bool parse_arguments(int argc, char *argv[], Flags *flags);
 
 /**
  * Добавление шаблона
  * @param flags - флаги
  * @param pattern - шаблон
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool add_pattern(Flags *flags, const char *pattern);
 
@@ -30,8 +44,8 @@ bool add_pattern(Flags *flags, const char *pattern);
  * Сохранение шаблона в файл
  * @param path_file - путь к файлу
  * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool pattern_for_file(const char *path_file, Flags *flags);
 
@@ -42,17 +56,13 @@ bool pattern_for_file(const char *path_file, Flags *flags);
  * @param flags - флаги
  * @param optind - количество шаблонов
  */
-void handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind);
+bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind);
 
 /**
- * Парсинг аргументов
- * @param argc - количество аргументов командной строки
- * @param argv - массив аргументов командной строки
- * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * Обработка ошибок
+ * @param invalid_opt - ошибочный аргумент
  */
-bool parse_arguments(int argc, char *argv[], Flags *flags);
+void grep_flag_error(char invalid_opt);
 
 /**
  * Обработка одного шаблона
@@ -81,11 +91,11 @@ void print_file_info(const char *path_file, const Flags *flags,
                      int line_number);
 
 /**
- * Чтение и вывод на экран результата
+ * Чтение и вывода результата
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @return SUCCESS - выполнено успешно
- * @return FAILURE - произошла ошибка
+ * @return EXIT_SUCCESS - выполнено успешно
+ * @return EXIT_FAILURE - произошла ошибка
  */
 bool print_file(const char *argv, Flags *flags);
 
