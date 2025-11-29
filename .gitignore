@@ -50,6 +50,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 /.idea/
-/src/.clang-format
+/.clang-format
 /README_RUS.md
 /CMakeLists.txt
