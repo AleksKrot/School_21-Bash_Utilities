@@ -1,7 +1,6 @@
 #include "my_cat_test.h"
 
 void create_test_files() {
-  system("mkdir -p ../../build");
   FILE *f1 = fopen(TEST_FILE1, "w");
   FILE *f2 = fopen(TEST_FILE2, "w");
   if (f1 == NULL || f2 == NULL) {
@@ -27,7 +26,6 @@ void create_test_files() {
 }
 
 void create_output_files(const char *command, const char *my_command) {
-  system("mkdir -p ../../build");
   char full_command[512];
   char my_full_command[512];
   FILE *cmd_output = NULL;

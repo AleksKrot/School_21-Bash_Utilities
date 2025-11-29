@@ -6,12 +6,12 @@
 #include <string.h>
 
 #define COMMAND "cat"
-#define MY_COMMAND "../../build/my_cat"
-#define OUTPUT_FILE "../../build/cat_output.txt"
-#define MY_OUTPUT_FILE "../../build/my_cat_output.txt"
-#define TEST_FILE1 "../../build/Test1.txt"
-#define TEST_FILE2 "../../build/Test2.txt"
-#define NON_EXISTENT_FILE "../../build/NonexistentTest.txt"
+#define MY_COMMAND "./my_cat"
+#define OUTPUT_FILE "cat_output.txt"
+#define MY_OUTPUT_FILE "my_cat_output.txt"
+#define TEST_FILE1 "Test1.txt"
+#define TEST_FILE2 "Test2.txt"
+#define NON_EXISTENT_FILE "NonexistentTest.txt"
 
 typedef struct {
   const char *description;
