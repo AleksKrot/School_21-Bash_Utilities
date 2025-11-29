@@ -13,7 +13,7 @@ my_cat:
 
 test:	my_cat
 		$(CC) $(CFLAG) $(SRC_DIR)/my_cat_test.c $(SRC_DIR)/my_cat_function.c $(COMMON_DIR)/common_function.c -o $(BUILD_DIR)/my_cat_test
-		$(BUILD_DIR)/my_cat_test
+		cd $(BUILD_DIR)/ && ./my_cat_test
 .PHONY: test
 
 clean: 
