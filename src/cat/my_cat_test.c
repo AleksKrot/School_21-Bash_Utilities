@@ -7,27 +7,26 @@ void create_test_files() {
     printf("Failed to create files\n");
     if (f1 != NULL) {
       fclose(f1);
-    } else {
+    }
+      if (f2 != NULL) {
       fclose(f2);
     }
-  } else {
+      return;
+  }
     fprintf(f1,
             "\tSoft kitty, warm kitty,\n\n\n\tLittle ball of fur,\n\n\n\tHappy "
             "kitty, sleepy kitty,\n\n\n\tPurr! purr! purr!\n\n\n\x01\x7F\xFF");
-    fclose(f1);
-
     fprintf(
         f2,
         "Freddy Krueger\nOne, Two, Freddy's coming for you,\nThree, Four, "
         "better lock your door,\n\n\nFive, Six, grab your crucifix,\nSeven, "
         "Eight, gonna stay up late,\nNine, Ten, never sleep "
         "again...\n\n\n\t\x05\x8F\xFF\n");
+    fclose(f1);
     fclose(f2);
-  }
 }
 
-void create_output_files(const char *command, const char *cat_output,
-                         const char *my_command, const char *my_cat_output) {
+void create_output_files(const char *command, const char *my_command) {
   char full_command[512];
   char my_full_command[512];
   FILE *cmd_output = NULL;
@@ -112,12 +111,9 @@ void compare_files() {
 }
 
 void run_test_case(TestCase test) {
-  const char *cat_output = "cat_output.txt";
-  const char *my_cat_output = "my_cat_output.txt";
-
   printf("Test: %s...\n", test.description);
 
-  create_output_files(test.command, cat_output, test.my_command, my_cat_output);
+  create_output_files(test.command, test.my_command);
   compare_files();
 }
 

@@ -26,12 +26,9 @@ void create_test_files();
 /**
  * Создание выходных файлов
  * @param command - команда для стандартной функции cat
- * @param cat_output - вывод стандартной функции cat
  * @param my_command - команда для функции my_cat
- * @param my_cat_output - вывод функции my_cat
  */
-void create_output_files(const char *command, const char *cat_output,
-                         const char *my_command, const char *my_cat_output);
+void create_output_files(const char *command, const char *my_command);
 
 /**
  * Сравнение выходных файлов
