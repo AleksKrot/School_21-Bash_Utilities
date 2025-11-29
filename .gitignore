@@ -52,3 +52,4 @@ dkms.conf
 /.idea/
 /src/.clang-format
 /README_RUS.md
+/CMakeLists.txt
