@@ -9,8 +9,8 @@
 
 #define COMMAND "grep"
 #define MY_COMMAND "./my_grep"
-#define OUTPUT_FILE "cat_output.txt"
-#define MY_OUTPUT_FILE "my_cat_output.txt"
+#define OUTPUT_FILE "grep_output.txt"
+#define MY_OUTPUT_FILE "my_grep_output.txt"
 #define PATTERN_1 "kitty"
 #define PATTERN_2 "little"
 #define TEST_FILE1 "Test1.txt"
