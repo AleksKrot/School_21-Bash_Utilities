@@ -5,6 +5,7 @@ bool process_files(int argc, char *argv[], Flags *flags) {
   if (argc < 2) {
       printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
       printf("Try 'grep --help' for more information.\n");
+      error = EXIT_FAILURE;
   } else {
     error = parse_arguments(argc, argv, flags);
   }
@@ -58,6 +59,9 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
     }
   }
   error = handle_empty_patterns(argc, argv, flags, &optind);
+  if (argc - optind > 1) {
+    flags->multi_files = true;
+  }
   return error;
 }
 
@@ -103,7 +107,7 @@ bool pattern_for_file(const char *path_file, Flags *flags) {
   bool error = EXIT_SUCCESS;
   const char *program_name = "grep";
   FILE *file = open_file(path_file, flags, program_name, &error);
-  if (!error) {
+  if (error == EXIT_SUCCESS) {
     size_t len = 0;
     ssize_t read;
     char *line = NULL;
@@ -114,7 +118,6 @@ bool pattern_for_file(const char *path_file, Flags *flags) {
       }
       if (read > 0) {
         error = add_pattern(flags, line);
-        flags->multi_files = true;
       }
       if (line != NULL) {
         free(line);
@@ -137,10 +140,9 @@ void grep_flag_error(char invalid_opt) {
 
 bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
   bool error = EXIT_SUCCESS;
-  if (!flags->count_pattern) {
+  if (flags->count_pattern == 0) {
     if (*optind < argc) {
-      error = add_pattern(flags, argv[*optind]);
-      (*optind)++;
+      error = add_pattern(flags, argv[(*optind)++]);
     }
     if (error == EXIT_FAILURE) {
       printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
@@ -197,10 +199,10 @@ bool handle_single_pattern(const char *line, const char *path_file,
 }
 
 bool print_file(const char *argv, Flags *flags) {
-  bool error = false;
+  bool error = EXIT_SUCCESS;
   const char *program_name = "grep";
   FILE *file = open_file(argv, flags, program_name, &error);
-  if (!error) {
+  if (error == EXIT_SUCCESS) {
     size_t len = 0;
     ssize_t read;
     int line_number = 0;
