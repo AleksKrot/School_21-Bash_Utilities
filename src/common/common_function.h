@@ -19,7 +19,6 @@ typedef struct Flags {
   bool c;
   bool l;
   bool h;
-  bool f;
   bool o;
   bool multi_files;
   bool n;
