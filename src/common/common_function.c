@@ -17,7 +17,7 @@ void init_flags(Flags *flags) {
   flags->c = false;
   flags->l = false;
   flags->h = false;
-  flags->f = NULL;
+  flags->f = false;
   flags->o = false;
   flags->multi_files = false;
 }
