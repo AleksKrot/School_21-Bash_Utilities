@@ -60,10 +60,10 @@ void cat_flag_error(char invalid_opt) {
   printf("Try 'cat --help' for more information.\n");
 }
 
-bool print_file(const char *argv, Flags *flags) {
+bool print_file(const char *file_for_print, Flags *flags) {
   bool error = false;
   const char *program_name = "cat";
-  FILE *file = open_file(argv, flags, program_name, &error);
+  FILE *file = open_file(file_for_print, flags, program_name, &error);
   if (!error) {
     int current_symbol;
     int previous_symbol = flags->end_file_symbol;
