@@ -42,21 +42,20 @@ bool add_pattern(Flags *flags, const char *pattern);
 
 /**
  * Сохранение шаблона в файл
- * @param path_file - путь к файлу
  * @param flags - флаги
+ * @param pattern - шаблон
  * @return EXIT_SUCCESS - выполнено успешно
  * @return EXIT_FAILURE - произошла ошибка
  */
-bool pattern_for_file(const char *path_file, Flags *flags);
+bool pattern_for_file(Flags *flags, const char *pattern);
 
 /**
  * Обработка случая шаблонов без флагов
  * @param argc - количество аргументов командной строки
  * @param argv - массив аргументов командной строки
  * @param flags - флаги
- * @param optind - количество шаблонов
  */
-bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind);
+bool handle_empty_patterns(int argc, char *argv[], Flags *flags);
 
 /**
  * Обработка ошибок
@@ -67,7 +66,7 @@ void grep_flag_error(char invalid_opt);
 /**
  * Обработка одного шаблона
  * @param line - строка
- * @param path_file - путь к файлу
+ * @param file - файл
  * @param flags - флаги
  * @param line_number - номер строки
  * @param pattern - шаблон
@@ -76,28 +75,27 @@ void grep_flag_error(char invalid_opt);
  * @return SUCCESS - выполнено успешно
  * @return FAILURE - произошла ошибка
  */
-bool handle_single_pattern(const char *line, const char *path_file,
+bool handle_single_pattern(const char *line, const char *file,
                            const Flags *flags, int line_number,
                            const char *pattern, bool *line_has_match,
                            bool *line_already_printed);
 
 /**
  * Вывод информации о названии файла и номере строки
- * @param path_file - путь к файлу
+ * @param file - файл
  * @param flags - флаги
  * @param line_number - номер строки
  */
-void print_file_info(const char *path_file, const Flags *flags,
-                     int line_number);
+void print_file_info(const char *file, const Flags *flags, int line_number);
 
 /**
  * Чтение и вывода результата
- * @param argv - массив аргументов командной строки
+ * @param file_for_print - массив файлов
  * @param flags - флаги
  * @return EXIT_SUCCESS - выполнено успешно
  * @return EXIT_FAILURE - произошла ошибка
  */
-bool print_file(const char *argv, Flags *flags);
+bool print_file(const char *file_for_print, Flags *flags);
 
 /**
  * Очистка флагов

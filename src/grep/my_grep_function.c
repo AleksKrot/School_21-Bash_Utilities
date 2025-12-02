@@ -44,7 +44,7 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         flags->s = true;
         break;
       case 'f':
-        if ((error = pattern_for_file(optarg, flags)) == EXIT_FAILURE) {
+        if ((error = pattern_for_file(flags, optarg)) == EXIT_FAILURE) {
           opt = -1;
         }
         break;
@@ -58,7 +58,7 @@ bool parse_arguments(int argc, char *argv[], Flags *flags) {
         break;
     }
   }
-  error = handle_empty_patterns(argc, argv, flags, &optind);
+  error = handle_empty_patterns(argc, argv, flags);
   if (argc - optind > 1) {
     flags->multi_files = true;
   }
@@ -97,16 +97,12 @@ void free_flags(Flags *flags) {
     flags->pattern = NULL;
     flags->count_pattern = 0;
   }
-  if (flags->f != NULL) {
-    free(flags->f);
-    flags->f = NULL;
-  }
 }
 
-bool pattern_for_file(const char *path_file, Flags *flags) {
+bool pattern_for_file(Flags *flags, const char *pattern) {
   bool error = EXIT_SUCCESS;
   const char *program_name = "grep";
-  FILE *file = open_file(path_file, flags, program_name, &error);
+  FILE *file = open_file(pattern, flags, program_name, &error);
   if (error == EXIT_SUCCESS) {
     size_t len = 0;
     ssize_t read;
@@ -119,9 +115,9 @@ bool pattern_for_file(const char *path_file, Flags *flags) {
       if (read > 0) {
         error = add_pattern(flags, line);
       }
-      if (line != NULL) {
-        free(line);
-      }
+    }
+    if (line != NULL) {
+      free(line);
     }
     fclose(file);
   }
@@ -138,11 +134,11 @@ void grep_flag_error(char invalid_opt) {
   printf("Try 'grep --help' for more information.\n");
 }
 
-bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
+bool handle_empty_patterns(int argc, char *argv[], Flags *flags) {
   bool error = EXIT_SUCCESS;
   if (flags->count_pattern == 0) {
-    if (*optind < argc) {
-      error = add_pattern(flags, argv[(*optind)++]);
+    if (optind < argc) {
+      error = add_pattern(flags, argv[optind++]);
     }
     if (error == EXIT_FAILURE) {
       printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
@@ -152,18 +148,16 @@ bool handle_empty_patterns(int argc, char *argv[], Flags *flags, int *optind) {
   return error;
 }
 
-
-void print_file_info(const char *path_file, const Flags *flags,
-                     int line_number) {
+void print_file_info(const char *file, const Flags *flags, int line_number) {
   if (flags->multi_files && !flags->h) {
-    printf("%s:", path_file);
+    printf("%s:", file);
   }
   if (flags->n && !flags->c) {
     printf("%d:", line_number);
   }
 }
 
-bool handle_single_pattern(const char *line, const char *path_file,
+bool handle_single_pattern(const char *line, const char *file,
                            const Flags *flags, int line_number,
                            const char *pattern, bool *line_has_match,
                            bool *line_already_printed) {
@@ -179,7 +173,7 @@ bool handle_single_pattern(const char *line, const char *path_file,
     while (!match_result && !(*line_already_printed)) {
       *line_has_match = true;
       if (!flags->v && !flags->c && !flags->l) {
-        print_file_info(path_file, flags, line_number);
+        print_file_info(file, flags, line_number);
         if (flags->o) {
           printf("%.*s\n", (int)(match.rm_eo - match.rm_so), ptr + match.rm_so);
         } else {
@@ -189,7 +183,7 @@ bool handle_single_pattern(const char *line, const char *path_file,
       }
       ptr = ptr + match.rm_eo;
       if (match.rm_so == match.rm_eo) {
-        ptr = (*ptr == '\0') ? ptr : ptr + 1;
+        ptr = *ptr == '\0' ? ptr : ptr + 1;
       }
       match_result = regexec(&regex, ptr, 1, &match, 0);
     }
@@ -198,10 +192,10 @@ bool handle_single_pattern(const char *line, const char *path_file,
   return *line_has_match;
 }
 
-bool print_file(const char *argv, Flags *flags) {
+bool print_file(const char *file_for_print, Flags *flags) {
   bool error = EXIT_SUCCESS;
   const char *program_name = "grep";
-  FILE *file = open_file(argv, flags, program_name, &error);
+  FILE *file = open_file(file_for_print, flags, program_name, &error);
   if (error == EXIT_SUCCESS) {
     size_t len = 0;
     ssize_t read;
@@ -223,27 +217,27 @@ bool print_file(const char *argv, Flags *flags) {
         const char *pattern = flags->pattern[i];
         if (pattern != NULL) {
           line_has_match = handle_single_pattern(
-              line, argv, flags, line_number, pattern, &line_has_match,
+              line, file_for_print, flags, line_number, pattern, &line_has_match,
               &line_already_printed);
         }
       }
       if (flags->v && !line_has_match) {
         match_count++;
         if (!flags->c && !flags->l && !line_already_printed) {
-          print_file_info(argv, flags, line_number);
+          print_file_info(file_for_print, flags, line_number);
           printf("%s\n", line);
         }
       } else if (!flags->v && line_has_match) {
         match_count++;
       }
       if (flags->l && match_count > 0 && !file_already_printed) {
-        printf("%s\n", argv);
+        printf("%s\n", file_for_print);
         file_already_printed = true;
       }
     }
     free(line);
     if (flags->c && !file_already_printed) {
-      print_file_info(argv, flags, line_number);
+      print_file_info(file_for_print, flags, line_number);
       printf("%d\n", match_count);
     }
     fclose(file);
